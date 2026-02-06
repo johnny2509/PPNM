@@ -2,10 +2,10 @@
 #include<limits>
 #include<cstdio>
 #include<iomanip>
+#include<cmath>
 
 int main()
 {
-
 
 	std::printf("%d. Machine epsilon\n", 1);
 
@@ -65,7 +65,37 @@ int main()
 	std::cout << "1 + tiny + tiny = " << a << "\n";
 	std::cout << "tiny + tiny + 1 = " << b << "\n";
 
+	std::printf("%d. Comparing doubles: introduction\n", 3);
+
+	std::printf("d%d is a sum of %d: %d.%d\n", 1, 8, 0, 1);
+	std::printf("d%d is %d times %d.%d\n", 2, 8, 0, 1);	
+
+	double d1 = 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1 + 0.1;
+	double d2 = 8 * 0.1;
+
+	std::cout << "d1 == d2? " << (d1 == d2 ? "true": "false") << "\n";
+
+	std::cout << std::fixed << std::setprecision(17);
+	std::cout << "d1 =" << d1 << "\n";
+	std::cout << "d2 =" << d2 << "\n";
+
+	std::printf("Comparing doubles: the task\n");
+
+	// bool approx(double a, double b, double acc=1e-9, double eps=1e-9) {
+		// std::cout << "|a-b|<=acc ? " << (|a-b|<=acc ? "true":"false") << "\n";
+		// std::cout << "|a-b|/Max(|a|,|b|)<=eps ? " << (|a-b|/Max(|a|,|b|)<=eps ? "tr
 
 	return 0;
 
 }
+
+bool approx(double a, double b, double acc=1e-9, double eps=1e-9) {
+	// std::cout << "|a-b|<=acc ? " << (|a-b|<=acc ? "true":"false") << "\n";
+	// std::cout << "|a-b|/Max(|a|,|b|)<=eps ? " << (|a-b|/Max(|a|,|b|)<=eps ? "true":"false") << "\n$
+        
+	double diff = std::abs(a - b);
+	if (diff <= acc) return true; // absolute tolerance
+	double max_ab = std::max(std::abs(a), std::abs(b));
+	return diff <= eps * max_ab; // relative tolerance
+}
+
